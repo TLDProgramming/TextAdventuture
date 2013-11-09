@@ -3,11 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>com.github.thelonedevil</groupId>
-	<artifactId>MUD</artifactId>
+	<artifactId>TextAdventure</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>MUD</name>
+	<name>TextAdventure</name>
 	<url>http://maven.apache.org</url>
 
 	<properties>
@@ -27,5 +27,68 @@
 			<version>1.12.2</version>
 			<scope>provided</scope>
 		</dependency>
+		<dependency>
+			<groupId>org.xerial</groupId>
+			<artifactId>sqlite-jdbc</artifactId>
+			<version>3.7.2</version>
+		</dependency>
 	</dependencies>
+
+	<build>
+	
+		<finalName>TextAdventure</finalName>
+		<defaultGoal>clean install</defaultGoal>
+		<plugins>
+		<plugin>
+                <!-- Build an executable JAR -->
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <finalName>${artifactId}</finalName>
+                    <archive>
+                        <manifest>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>lib/</classpathPrefix>
+                            <mainClass>com.github.thelonedevil.${artifactId}.App</mainClass>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.1</version>
+				<configuration>
+					<source>1.7</source>
+					<target>1.7</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-shade-plugin</artifactId>
+				<version>2.0</version>
+				<configuration>
+					<!-- put your configurations here -->
+					<relocations>
+						<relocation>
+							<pattern>org.sqlite</pattern>
+							<shadedPattern>com.github.thelonedevil.library.org.sqlite</shadedPattern>
+						</relocation>
+						<relocation>
+							<pattern>org.ibex</pattern>
+							<shadedPattern>com.github.thelonedevil.library.org.ibex</shadedPattern>
+						</relocation>
+					</relocations>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<goal>shade</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
 </project>

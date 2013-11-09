@@ -34,31 +34,7 @@ public class Game {
 		characters.add("Elven Mage");
 		characters.add("Elven Archer");
 		Player p = new Player(characterSelect(), characters);
-		switch (say("You find yourself in a clearing in the middle of a dark and spooky forest.")) {
-		case "look around":
-			System.out.println("You look around");
-			break;
-		case "go north":
-			System.out.println("You move north of your current location");
-			switch (say("You have left the forest")) {
-			case "look around":
-				switch (say("To your north and east is an open plain, to the south is a forest and to your west is a river.")) {
-				case "go west":
-
-				default:
-					unknownCommand();
-					break;
-				}
-				break;
-			default:
-				unknownCommand();
-				break;
-			}
-			break;
-		default:
-			unknownCommand();
-			break;
-		}
+		Room start = new Room("Start", true, true, true ,true);
 	}
 	private int characterSelect() {
 		System.out.println("Select your character:");
