@@ -46,21 +46,20 @@ public class Game {
 				case "go west":
 
 				default:
-					System.out.println("One is sorry One does not know how to do that");
+					unknownCommand();
 					break;
 				}
 				break;
 			default:
-				System.out.println("One is sorry One does not know how to do that");
+				unknownCommand();
 				break;
 			}
 			break;
 		default:
-			System.out.println("One is sorry One does not know how to do that");
+			unknownCommand();
 			break;
 		}
 	}
-
 	private int characterSelect() {
 		System.out.println("Select your character:");
 		System.out.println("1. Human Warrior");
@@ -79,5 +78,9 @@ public class Game {
 		System.out.println("What do you do?");
 		return s.nextLine().toLowerCase();
 
+	}
+	
+	private void unknownCommand(){
+		System.out.println("One is sorry One does not know how to do that");
 	}
 }
