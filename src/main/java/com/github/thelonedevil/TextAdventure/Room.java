@@ -32,6 +32,8 @@ public class Room {
 	int goNorth() {
 		switch (ID) {
 		case 1:
+			System.out.println("You move north of your current location");
+			System.out.println("You have left the forest");
 			return 2;
 		}
 		return 0;

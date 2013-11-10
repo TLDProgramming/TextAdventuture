@@ -1,7 +1,6 @@
 package com.github.thelonedevil.TextAdventure;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -79,6 +78,19 @@ public class Game {
 			
 		case"swing sword":
 			//do things to attack things
+			
+		case"quit":
+			System.out.println("Are you sure you want to quit the game? y/n");
+			switch(s.nextLine().toLowerCase()){
+			case"y":
+				System.exit(0);
+				break;
+			case"n":
+				break;
+			default:
+				unknownCommand();
+			}
+			break;
 		default:
 			unknownCommand();
 		}
