@@ -76,6 +76,9 @@ public class Game {
 			newRoom = new Room(room.goWest());
 			System.out.println(newRoom.lookAround());
 			break;
+			
+		case"swing sword":
+			//do things to attack things
 		default:
 			unknownCommand();
 		}
