@@ -1,11 +1,10 @@
 package com.github.thelonedevil.TextAdventure;
 
-import java.util.HashMap;
 import java.util.Random;
 
 public class Room {
 	int ID;
-	HashMap<String, Boolean> exits = new HashMap<String, Boolean>();
+	boolean combat = false;
 
 	Room(int type) {
 		this.ID = type;
@@ -16,14 +15,19 @@ public class Room {
 	String lookAround() {
 		switch (ID) {
 		case 1:
-			return "You find yourself in a clearing in the middle of a dark and spooky forest.";
+			return "You find yourself in a clearing in the middle of a dark and spooky forest. \nTo the north the trees get less dense, but to the south, east and west they grow closer together, blocking out even more of the light.";
 		case 2:
-			int rand = new Random().nextInt(5);
-			System.out.println(rand);
-			if(rand == 1){
-				return "A Level 1 Goblin appears in front of you";
+			if (!combat) {
+				int rand = new Random().nextInt(5);
+				System.out.println(rand + "Room .java line 22");
+				if (rand == 1) {
+					combat = true;
+					return "A Level 1 Goblin appears in front of you.";
+				}
+				return "To your north and east is an open plain, to the south is a forest and to your west is a river.";
+			}if(combat){
+				return "A level 1 Goblin stands in your way.";
 			}
-			return "To your north and east is an open plain, to the south is a forest and to your west is a river.";
 		default:
 			return "error";
 		}
@@ -60,6 +64,5 @@ public class Room {
 		}
 		return 0;
 	}
-	
 
 }

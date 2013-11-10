@@ -55,37 +55,52 @@ public class Game {
 	void command(Room room) {
 		System.out.println("What do you do?");
 		Room newRoom = null;
-		switch (s.nextLine().toLowerCase()) {
+		switch (s.nextLine().toLowerCase().trim()) {
 		case "look around":
 			System.out.println(room.lookAround());
 			break;
 		case "go north":
-			newRoom = new Room(room.goNorth());
-			System.out.println(newRoom.lookAround());
+			int north = room.goNorth();
+			if (north != 0) {
+				newRoom = new Room(north);
+				System.out.println(newRoom.lookAround());
+			} else
+				noRoom();
 			break;
 		case "go east":
-			newRoom = new Room(room.goEast());
-			System.out.println(newRoom.lookAround());
+			int east = room.goEast();
+			if (east != 0) {
+				newRoom = new Room(east);
+				System.out.println(newRoom.lookAround());
+			} else
+				noRoom();
 			break;
 		case "go south":
-			newRoom = new Room(room.goSouth());
-			System.out.println(newRoom.lookAround());
+			int south = room.goSouth();
+			if (south != 0) {
+				newRoom = new Room(south);
+				System.out.println(newRoom.lookAround());
+			} else
+				noRoom();
 			break;
 		case "go west":
-			newRoom = new Room(room.goWest());
+			int west = room.goWest();
+			if(west != 0){
+			newRoom = new Room(west);
 			System.out.println(newRoom.lookAround());
+			} else noRoom();
 			break;
-			
-		case"swing sword":
-			//do things to attack things
-			
-		case"quit":
+
+		case "swing sword":
+			// do things to attack things
+
+		case "quit":
 			System.out.println("Are you sure you want to quit the game? y/n");
-			switch(s.nextLine().toLowerCase()){
-			case"y":
+			switch (s.nextLine().toLowerCase().trim()) {
+			case "y":
 				System.exit(0);
 				break;
-			case"n":
+			case "n":
 				break;
 			default:
 				unknownCommand();
@@ -94,11 +109,15 @@ public class Game {
 		default:
 			unknownCommand();
 		}
-		if(newRoom != null){
-		command(newRoom);
-		}else {
+		if (newRoom != null) {
+			command(newRoom);
+		} else {
 			command(room);
 		}
+	}
+
+	private void noRoom() {
+		System.out.println("You can not go that way");
 	}
 
 	private void unknownCommand() {
