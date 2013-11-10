@@ -1,6 +1,7 @@
 package com.github.thelonedevil.TextAdventure;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Scanner;
 
@@ -34,8 +35,11 @@ public class Game {
 		characters.add("Elven Mage");
 		characters.add("Elven Archer");
 		Player p = new Player(characterSelect(), characters);
-		Room start = new Room("Start", true, true, true ,true);
+		Room start = new Room(1);
+		System.out.println(start.lookAround());
+		command(start);
 	}
+
 	private int characterSelect() {
 		System.out.println("Select your character:");
 		System.out.println("1. Human Warrior");
@@ -49,14 +53,40 @@ public class Game {
 
 	}
 
-	private String say(String words) {
-		System.out.println(words);
+	void command(Room room) {
 		System.out.println("What do you do?");
-		return s.nextLine().toLowerCase();
-
+		Room newRoom = null;
+		switch (s.nextLine().toLowerCase()) {
+		case "look around":
+			System.out.println(room.lookAround());
+			break;
+		case "go north":
+			newRoom = new Room(room.goNorth());
+			System.out.println(newRoom.lookAround());
+			break;
+		case "go east":
+			newRoom = new Room(room.goEast());
+			System.out.println(newRoom.lookAround());
+			break;
+		case "go south":
+			newRoom = new Room(room.goSouth());
+			System.out.println(newRoom.lookAround());
+			break;
+		case "go west":
+			newRoom = new Room(room.goWest());
+			System.out.println(newRoom.lookAround());
+			break;
+		default:
+			unknownCommand();
+		}
+		if(newRoom != null){
+		command(newRoom);
+		}else {
+			command(room);
+		}
 	}
-	
-	private void unknownCommand(){
+
+	private void unknownCommand() {
 		System.out.println("One is sorry One does not know how to do that");
 	}
 }

@@ -2,35 +2,52 @@ package com.github.thelonedevil.TextAdventure;
 
 import java.util.HashMap;
 
-import lombok.Getter;
-import lombok.Setter;
 
 public class Room {
-	String type;
+	int ID;
 	HashMap<String, Boolean> exits = new HashMap<String, Boolean>();
-	@Getter @Setter HashMap<String, Double> enemies= new HashMap<String, Double>();
+	HashMap<String, Double> enemies= new HashMap<String, Double>();
 
-	Room(String type, boolean north, boolean east, boolean south, boolean west) {
-		this.type = type;
-		exits.put("north",north);
-		exits.put("east",east);
-		exits.put("south",south);
-		exits.put("west",west);
+	Room(int type) {
+		this.ID = type;
+		lookAround();
+		
 		
 	}
-	void lookAround(){
-		
+	String lookAround(){
+		switch(ID){
+		case 1:
+			return "You find yourself in a clearing in the middle of a dark and spooky forest.";
+		case 2:
+			return "To your north and east is an open plain, to the south is a forest and to your west is a river.";
+		default:
+			return "error";
+		}
 	}
-	void goNorth(){
-		
+	int goNorth(){
+		switch(ID){
+		case 1:
+			return 2;
+		}
+		return 0;
 	}
-	void goSouth(){
-		
+	int goSouth(){
+		switch(ID){
+		case 2:
+			return 1;
+		}
+		return 0;
 	}
-	void goEast(){
+	int goEast(){
+		switch(ID){
 		
+		}
+		return 0;
 	}
-	void goWest(){
+	int goWest(){
+		switch(ID){
 		
+		}
+		return 0;
 	}
 }
