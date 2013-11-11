@@ -15,59 +15,50 @@ public class Player {
 	int exp;
 	@Getter
 	@Setter
-	int strength;
+	int strength; // carry weight, melee damage
 	@Getter
 	@Setter
-	int perception;
+	int intelligence; // magic damage, probability of solving puzzles
 	@Getter
 	@Setter
-	int endurance;
-	@Getter
-	@Setter
-	int charisma;
-	@Getter
-	@Setter
-	int intelligence;
-	@Getter
-	@Setter
-	int agility;
-	@Getter
-	@Setter
-	int luck;
+	int agility; // dodgeing, ranged damage
 
 	Player(int number, List<String> list) {
 		this.character = list.get(number - 1);
 		System.out.println("You have chosen: " + character);
 		switch (number) {
 		case 1: // human warrior
-			strength = 7;
-			perception = 4;
-			endurance = 8;
-			charisma = 4;
+			strength = 8;
 			intelligence = 3;
 			agility = 4;
-			luck = 5;
 			break;
 		case 2: // human mage
 			strength = 3;
-			perception = 6;
-			endurance = 5;
-			charisma = 4;
 			intelligence = 8;
 			agility = 4;
-			luck = 5;
 			break;
 		case 3:// human archer
+			strength = 4;
+			intelligence = 3;
+			agility = 8;
 			break;
 		case 4: // eleven warrior
+			strength = 9;
+			intelligence = 3;
+			agility = 3;
 			break;
 		case 5: // eleven mage
+			strength = 3;
+			intelligence = 9;
+			agility = 3;
 			break;
 		case 6: // elven archer
+			strength = 3;
+			intelligence = 3;
+			agility = 9;
 			break;
 		default:
 		}
 
 	}
-
 }
