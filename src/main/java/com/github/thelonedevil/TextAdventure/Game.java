@@ -4,6 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
+import com.github.thelonedevil.TextAdventure.enemies.Enemy;
+import com.github.thelonedevil.TextAdventure.weapons.Sword;
+import com.github.thelonedevil.TextAdventure.weapons.Weapon;
+
 public class Game {
 	Scanner s = new Scanner(System.in);
 
@@ -26,17 +30,21 @@ public class Game {
 	 */
 
 	public void run() {
-		List<String> characters = new ArrayList<String>();
-		characters.add("Human Warrior");
-		characters.add("Human Mage");
-		characters.add("Human Archer");
-		characters.add("Elven Warrior");
-		characters.add("Elven Mage");
-		characters.add("Elven Archer");
-		Player p = new Player(characterSelect(), characters);
-		Room start = new Room(1);
-		System.out.println(start.lookAround());
-		command(start);
+		int c = characterSelect();
+		if (c != 0) {
+			List<String> characters = new ArrayList<String>();
+			characters.add("Human Warrior");
+			characters.add("Human Mage");
+			characters.add("Human Archer");
+			characters.add("Elven Warrior");
+			characters.add("Elven Mage");
+			characters.add("Elven Archer");
+			Player p = new Player(c, characters);
+			Room start = new Room(1);
+			System.out.println(start.lookAround());
+			command(start, p);
+		} else
+			run();
 	}
 
 	private int characterSelect() {
@@ -47,12 +55,17 @@ public class Game {
 		System.out.println("4. Elven Warrior");
 		System.out.println("5. Elven Mage");
 		System.out.println("6. Elven Archer");
-		int character = Integer.parseInt(s.nextLine());
-		return character;
+		try {
+			int character = Integer.parseInt(s.nextLine());
+			return character;
+		} catch (NumberFormatException e) {
+			System.out.println("Not a valid character");
+		}
+		return 0;
 
 	}
 
-	void command(Room room) {
+	void command(Room room, Player player) {
 		System.out.println("What do you do?");
 		Room newRoom = null;
 		switch (s.nextLine().toLowerCase().trim()) {
@@ -85,15 +98,49 @@ public class Game {
 			break;
 		case "go west":
 			int west = room.goWest();
-			if(west != 0){
-			newRoom = new Room(west);
-			System.out.println(newRoom.lookAround());
-			} else noRoom();
+			if (west != 0) {
+				newRoom = new Room(west);
+				System.out.println(newRoom.lookAround());
+			} else
+				noRoom();
 			break;
 
 		case "swing sword":
-			// do things to attack things
+			int damage;
+			int level;
+			double hit = 0;
+			int weaponPower;
+			Weapon weapon = player.getEquipedWeapon();
+			switch (player.getCharacter().toLowerCase()) {
+			case "human warrior":
+			case "elven warrior":
+				if (weapon instanceof Sword) {
+					weaponPower = weapon.getPower();
+					damage = player.getStrength();
+					level = player.getLevel();
+					hit = (damage * level) /* / Math.PI */;
+					System.out.println(hit);
+				} else
+					System.out.println("You do not have a sword equipped");
+				break;
+			}
+			if (room.isCombat()) {
+				Enemy enemy = room.getEnemy();
+				if (enemy.getHealth() > 0) {
+					if (enemy.damage(hit)) {
+						System.out.println("You hit " + enemy.getType() + " for " + hit + " damage");
+						System.out.println(enemy.getHealth());
+					} else
+						System.out.println("You missed");
+				} if(enemy.getHealth() < 0){
+					enemy.dead(enemy.getType());
+					room.setCombat(false);
+					room.setKilled(true);
+				}
+			}
 
+			// do things to attack things
+			break;
 		case "quit":
 			System.out.println("Are you sure you want to quit the game? y/n");
 			switch (s.nextLine().toLowerCase().trim()) {
@@ -110,9 +157,9 @@ public class Game {
 			unknownCommand();
 		}
 		if (newRoom != null) {
-			command(newRoom);
+			command(newRoom, player);
 		} else {
-			command(room);
+			command(room, player);
 		}
 	}
 
