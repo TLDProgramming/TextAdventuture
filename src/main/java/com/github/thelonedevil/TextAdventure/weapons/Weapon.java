@@ -5,4 +5,8 @@ import lombok.Getter;
 public class Weapon {
 	@Getter
 	int Power;
+
+	Weapon(int power) {
+		this.Power = power;
+	}
 }

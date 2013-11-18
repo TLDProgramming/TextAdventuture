@@ -116,7 +116,7 @@ public class Game {
 			case "elven warrior":
 				if (weapon instanceof Sword) {
 					weaponPower = weapon.getPower();
-					damage = player.getStrength();
+					damage = player.getStrength() * weaponPower;
 					level = player.getLevel();
 					hit = (damage * level) /* / Math.PI */;
 					System.out.println(hit);

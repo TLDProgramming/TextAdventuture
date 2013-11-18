@@ -70,6 +70,6 @@ public class Player {
 
 	public Weapon getEquipedWeapon() {
 		// TODO Auto-generated method stub
-		return new Sword();
+		return new Sword(1);
 	}
 }
